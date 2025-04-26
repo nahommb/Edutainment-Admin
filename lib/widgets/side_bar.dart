@@ -1,12 +1,34 @@
+import 'package:edutainment_admin/data/provider.dart';
 import 'package:edutainment_admin/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SideBar extends StatelessWidget {
   const SideBar({super.key});
 
+  Future popUp (context){
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Text('Log out'),
+        content: Text('Are you Sure Wnat Log out'),
+        actions: [
+          TextButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Text('Yes')),
+          TextButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Text('No'))
+        ],
+      );
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+    final dataProvider = Provider.of<DataProvider>(context);
+
     return Container(
       height: double.infinity,
       width: 200,
@@ -21,19 +43,26 @@ class SideBar extends StatelessWidget {
           SizedBox(height: 20,),
          sideBarButtons(text: 'Analytics',onTap: (){
            print('clicked');
+
+           dataProvider.changePage(0);
          },icon: Icons.analytics_outlined),
           sideBarButtons(text: 'Add Story',onTap: (){
             print('clicked');
+            dataProvider.changePage(1);
           },icon: Icons.bookmark_added_outlined),
           sideBarButtons(text: 'Add Games',onTap: (){
             print('clicked');
-          },icon: Icons.add),
-          sideBarButtons(text: 'Add Story',onTap: (){
+            dataProvider.changePage(2);
+          },icon: Icons.games_outlined),
+          sideBarButtons(text: 'Control',onTap: (){
             print('clicked');
-          },icon: Icons.add),
-          sideBarButtons(text: 'Add Story',onTap: (){
+            dataProvider.changePage(3);
+          },icon: Icons.settings_suggest_outlined),
+          sideBarButtons(text: 'Log Out',onTap: (){
             print('clicked');
-          },icon: Icons.add),
+             popUp(context);
+            // dataProvider.changePage(4);
+          },icon: Icons.logout_outlined),
         ],
       ),
     );

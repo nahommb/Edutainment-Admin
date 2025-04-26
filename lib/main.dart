@@ -1,8 +1,14 @@
+import 'package:edutainment_admin/data/provider.dart';
 import 'package:edutainment_admin/screens/home_screen.dart';
+import 'package:edutainment_admin/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+     MultiProvider(providers: [
+       ChangeNotifierProvider(create: (ctx)=>DataProvider())
+     ],child: MyApp(),));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
+      routes: {
+        HomeScreen.routeName:(context)=>HomeScreen(),
+      },
     );
   }
 }
